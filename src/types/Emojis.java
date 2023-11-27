@@ -28,4 +28,8 @@ public enum Emojis implements Filling {
 	public Emojis[] fillings() {
 		return Emojis.values();
 	}
+
+	public boolean equals(Filling f) {
+		return this.rep.equals(f.toString());
+	}
 }

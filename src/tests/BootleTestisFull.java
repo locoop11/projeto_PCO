@@ -72,7 +72,7 @@ class BootleTestisFull {
 		
 		bootleTest = new Bottle(vec);
 
-		bootleTest.pourOut(1);
+		bootleTest.pourOut();
 		
 		boolean actual = bootleTest.isFull();
 		boolean expected = false;
@@ -92,7 +92,7 @@ class BootleTestisFull {
 		
 		bootleTest = new Bottle(vec);
 
-		bootleTest.pourOut(1);
+		bootleTest.pourOut();
 		
 		boolean actual = bootleTest.isFull();
 		boolean expected = false;
@@ -111,7 +111,7 @@ class BootleTestisFull {
 		
 		bootleTest = new Bottle(vec);
 		
-		bootleTest.receive(vec[2], 1);
+		bootleTest.receive(vec[2]);
 		
 		boolean actual = bootleTest.isFull();
 		boolean expected = true;

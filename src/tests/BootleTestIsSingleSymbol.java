@@ -105,7 +105,7 @@ class BootleTestIsSingleSymbol {
 		
 		bootleTest = new Bottle(vec);
 		
-		bootleTest.pourOut(1);
+		bootleTest.pourOut();
 
 		boolean actual = bootleTest.isSingleFilling();
 		boolean expected = false;
@@ -128,7 +128,7 @@ class BootleTestIsSingleSymbol {
 		
 		bootleTest = new Bottle(vec);
 		
-		bootleTest.pourOut(1);
+		bootleTest.pourOut();
 
 		boolean actual = bootleTest.isSingleFilling();
 		boolean expected = true;

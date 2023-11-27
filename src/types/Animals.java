@@ -32,4 +32,8 @@ public enum Animals implements Filling {
 	public Animals[] fillings() {
 		return Animals.values();
 	}
+
+	public boolean equals(Filling f) {
+		return this.rep.equals(f.toString());
+	}
 }

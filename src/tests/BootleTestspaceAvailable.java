@@ -73,7 +73,7 @@ class BootleTestspaceAvailable {
 		
 		bootleTest = new Bottle(vec);
 
-		bootleTest.pourOut(1);
+		bootleTest.pourOut();
 		
 		int actual = bootleTest.spaceAvailable();
 		int expected = 1;
@@ -93,7 +93,7 @@ class BootleTestspaceAvailable {
 		
 		bootleTest = new Bottle(vec);
 
-		bootleTest.pourOut(1);
+		bootleTest.pourOut();
 		
 		int actual = bootleTest.spaceAvailable();
 		int expected = 2;
@@ -113,9 +113,9 @@ class BootleTestspaceAvailable {
 		
 		bootleTest = new Bottle(vec);
 
-		bootleTest.pourOut(1);
+		bootleTest.pourOut();
 		
-		bootleTest.receive(vec[2], 1);
+		bootleTest.receive(vec[2]);
 		
 		int actual = bootleTest.spaceAvailable();
 		int expected = 1;

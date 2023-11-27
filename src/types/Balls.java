@@ -29,4 +29,7 @@ public enum Balls implements Filling {
 		return Balls.values();
 	}
 
+	public boolean equals(Filling f) {
+		return this.rep.equals(f.toString());
+	}
 }

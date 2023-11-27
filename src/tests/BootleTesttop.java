@@ -88,7 +88,7 @@ class BootleTesttop {
 
 		bootleTest = new Bottle(vec);
 
-		bootleTest.pourOut(1);
+		bootleTest.pourOut();
 
 		Filling actual = bootleTest.top();
 		Filling expected = Emojis.LOVE;
@@ -108,7 +108,7 @@ class BootleTesttop {
 
 		bootleTest = new Bottle(vec);
 
-		bootleTest.receive(Emojis.ANGEL,1);
+		bootleTest.receive(Emojis.ANGEL);
 
 		Filling actual = bootleTest.top();
 		Filling expected = Emojis.ANGEL;

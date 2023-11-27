@@ -29,4 +29,7 @@ public enum Squares implements Filling {
 		return Squares.values();
 	}
 
+	public boolean equals(Filling f) {
+		return this.rep.equals(f.toString());
+	}
 }

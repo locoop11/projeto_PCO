@@ -12,10 +12,20 @@ public class Bottle implements Iterable<Filling>{
 
 	public static String EOL = System.lineSeparator();
 
+
+	private Filling[] contents;
+    private int size;
+
+
 	/**
 	 * 
 	 */
 	public Bottle() {
+		this.size = DEFAULT_SIZE;
+        this.contents = new Filling[size];
+        for (int i = 0; i < size; i++) {
+            this.contents[i] = null; // Assuming null represents an empty space
+        }
 	}
 
 	/**
@@ -23,6 +33,11 @@ public class Bottle implements Iterable<Filling>{
 	 * @param size
 	 */
 	public Bottle(int size) {
+		this.size = size;
+        this.contents = new Filling[size];
+        for (int i = 0; i < size; i++) {
+            this.contents[i] = null; // Assuming null represents an empty space
+        }
 	}
 
 
@@ -30,13 +45,23 @@ public class Bottle implements Iterable<Filling>{
 	 * @param content
 	 */
 	public Bottle(Filling[] content ) {
+		this.size = content.length;
+        this.contents = new Filling[size];
+        for(int i = 0; i < size; i++) {
+			this.contents[i] = content[i];
+		}
 	}
 
 	/**
 	 * @return
 	 */
 	public boolean isFull() {
-		return false;
+		for (Filling f : contents) {
+            if (f == null) {
+                return false;
+            }
+        }
+        return true;
 	}
 
 	/**
@@ -44,7 +69,12 @@ public class Bottle implements Iterable<Filling>{
 	 * @return
 	 */
 	public boolean isEmpty() {
-		return false;
+		for (Filling f : contents) {
+            if (f != null) {
+                return false;
+            }
+        }
+        return true;
 	}
 
 	/**
@@ -52,7 +82,12 @@ public class Bottle implements Iterable<Filling>{
 	 * @return
 	 */
 	public Filling top() {
-		return null;
+		for (int i = size - 1; i >= 0; i--) {
+            if (contents[i] != null) {
+                return contents[i];
+            }
+        }
+        return null;
 	}
 
 	/**
@@ -60,34 +95,47 @@ public class Bottle implements Iterable<Filling>{
 	 * @return
 	 */
 	public int spaceAvailable() {
-		return 0;	
+		int space = 0;
+        for (Filling f : contents) {
+            if (f == null) {
+                space++;
+            }
+        }
+        return space;	
 	}
 
 	/**
 	 * 
 	 * @param n
-	 */
+	
 	public void pourOut(int n) {
 
 	}
+	*/
 
 	/**
 	 * 
 	 */
 	public void pourOut() {
-
+		for (int i = size -1; i >= 0; i--) {
+            if (contents[i] != null) {
+                contents[i] = null;
+                break;
+            }
+        }
 	}
 
 
 	/**
-	 * 
+	 * No need to implement this method
 	 * @param s
 	 * @param howMany
 	 * @return
-	 */
+	
 	public boolean receive(Filling s, int howMany) {
 		return false;
 	}
+	*/
 
 
 	/**
@@ -96,7 +144,15 @@ public class Bottle implements Iterable<Filling>{
 	 * @return
 	 */
 	public boolean receive(Filling s) {
-		return false;
+		if (!isFull() && s != null) {
+            for (int i = 0; i < size; i++) {
+                if (contents[i] == null) {
+                    contents[i] = s;
+                    return true;
+                }
+            }
+        }
+        return false;
 
 	}
 
@@ -105,7 +161,7 @@ public class Bottle implements Iterable<Filling>{
 	 * @return
 	 */
 	public int size() {
-		return 0;
+		return size;
 	}
 
 	/**
@@ -113,7 +169,17 @@ public class Bottle implements Iterable<Filling>{
 	 * @return
 	 */
 	public boolean isSingleFilling() {
-		return true;
+        Filling first = null;
+        for (Filling f : contents) {
+            if (f != null) {
+                if (first == null) {
+                    first = f;
+                } else if (!first.equals(f)) {
+                    return false;
+                }
+            }
+        }
+        return true;
 	}
 
 
@@ -123,8 +189,7 @@ public class Bottle implements Iterable<Filling>{
 	 * @return
 	 */
 	public Filling[] getContent() {
-
-		return null;
+		return contents;
 	}
 
 
@@ -132,17 +197,37 @@ public class Bottle implements Iterable<Filling>{
 	 * 
 	 */
 	public String toString() {
-
-		return null;
-
+		StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+			if (contents[i] == null) {
+				sb.append(empty);
+			} else {
+				sb.append(contents[i].toString());
+			}
+			sb.append(EOL);
+		}
+		return sb.toString();
 	}
 
 	/**
 	 * 
 	 */
 	public Iterator<Filling> iterator() {
-		return null;
-	}
+		return new Iterator<Filling>() {
+            private int currentIndex = -1;
 
+            @Override
+            public boolean hasNext() {
+				int nextIndex = currentIndex + 1;
+                return (nextIndex < size && contents[nextIndex] != null);
+            }
+
+            @Override
+            public Filling next() {
+				currentIndex = currentIndex + 1;
+                return contents[currentIndex];
+            }
+        };
+	}
 
 }
