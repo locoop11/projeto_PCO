@@ -198,7 +198,7 @@ public class Bottle implements Iterable<Filling>{
 	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i--) {
 			if (contents[i] == null) {
 				sb.append(empty);
 			} else {
