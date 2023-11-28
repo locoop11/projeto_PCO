@@ -87,7 +87,20 @@ public class Bottle implements Iterable<Filling>{
                 return contents[i];
             }
         }
-	    throw new ArrayIndexOutOfBoundsException("A garrafa está vazia.");
+		throw new ArrayIndexOutOfBoundsException("");
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Filling topContent() {
+		for (int i = size - 1; i >= 0; i--) {
+            if (contents[i] != null) {
+                return contents[i];
+            }
+        }
+		return null;
 	}
 
 	/**
@@ -145,7 +158,7 @@ public class Bottle implements Iterable<Filling>{
 	 */
 	public boolean receive(Filling s) {
 	    if (!isFull() && s != null) {
-	        Filling top = top();
+	        Filling top = topContent();
 	        if (top == null || s.equals(top)) {
 	            for (int i = 0; i < size; i++) {
 	                if (contents[i] == null) {
