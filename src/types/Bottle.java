@@ -87,7 +87,7 @@ public class Bottle implements Iterable<Filling>{
                 return contents[i];
             }
         }
-        return null;
+	    throw new ArrayIndexOutOfBoundsException("A garrafa está vazia.");
 	}
 
 	/**
