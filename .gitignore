@@ -9,10 +9,11 @@
 
 # Generated files
 target/
-bin/
-out/
+./bin/
 build/
+dist/
 
 # IDE files
 .idea/
 .vscode/
+bin/types/HugoFillingGameImpl.class
