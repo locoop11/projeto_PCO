@@ -1,6 +1,6 @@
 package types;
 
-public class HugoFillingGameImpl implements FillingGame {
+public class HugoFillingGameImpl extends AbstractFillingGame {
 
     private Table table; // The game table.
     private int currentScore;
@@ -57,6 +57,18 @@ public class HugoFillingGameImpl implements FillingGame {
     @Override
     public int score() {
         return currentScore; // Return the current score.
+    }
+
+    @Override
+    public Bottle getNewBootle() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getNewBootle'");
+    }
+
+    @Override
+    public void updateScore() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateScore'");
     }
 
     // Additional methods can be implemented as needed.

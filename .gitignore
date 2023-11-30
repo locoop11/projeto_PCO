@@ -1,0 +1,18 @@
+
+# Java build files
+**/*.class
+
+# Compiled source
+**/*.bin
+**/*.war
+**/*.ear
+
+# Generated files
+target/
+bin/
+out/
+build/
+
+# IDE files
+.idea/
+.vscode/
