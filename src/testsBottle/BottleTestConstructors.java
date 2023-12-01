@@ -76,15 +76,15 @@ class BottleTestConstructors {
 		bottleTest.pourOut();
 
 		String actual = bottleTest.toString();
-		String expected = Table.empty + Table.EOL
-				+ Table.empty + Table.EOL
-				+ "😇"+ Table.EOL
-				+ "😇"+ Table.EOL
-				+ "😇"+ Table.EOL
-				+ "😇"+ Table.EOL
-				+ "😇"+ Table.EOL;
+		String expected = Table.empty + "    "
+				+ Table.empty + "    "
+				+ "😇"+ "    "
+				+ "😇"+ "    "
+				+ "😇"+ "    "
+				+ "😇"+ "    "
+				+ "😇"+ "    "+Table.EOL;
 
-		assertEquals(actual, expected);
+		assertEquals(expected, actual);
 	}
 
 }

@@ -51,13 +51,13 @@ class BottleTestIsReceive {
 		bottleTest.pourOut();
 		
 		String actual = bottleTest.toString();
-		String expected = Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ "😍" + EOL;
+		String expected = Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ "😍" + "    " + EOL;
 
 		assertEquals(actual, expected);
 	}
@@ -85,13 +85,13 @@ class BottleTestIsReceive {
 		bottleTest.pourOut();
 
 		String actual = bottleTest.toString();
-		String expected = Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL;
+		String expected = Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    " + EOL;
 
 		assertEquals(actual, expected);
 
@@ -116,13 +116,13 @@ class BottleTestIsReceive {
 		
 
 		String actual = bottleTest.toString();
-		String expected = Table.empty + EOL
-				+ Table.empty + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL
-				+ "😇"+ EOL
-				+ "😇"+ EOL
-				+ "😇" + EOL;
+		String expected = Table.empty + "    "
+				+ Table.empty + "    "
+				+ "😇" + "    "
+				+ "😇" + "    "
+				+ "😇"+ "    "
+				+ "😇"+ "    "
+				+ "😇" + "    " + EOL;
 
 		assertEquals(actual, expected);
 
@@ -147,13 +147,13 @@ class BottleTestIsReceive {
 
 		String actual = bottleTest.toString();
 		String expected = 
-				  "😍" + EOL
-				+ "😍" + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL
-				+ "😇"+ EOL
-				+ "😇"+ EOL
-				+ "😇" + EOL;
+				  "😍" + "    "
+				+ "😍" + "    "
+				+ "😇" + "    "
+				+ "😇" + "    "
+				+ "😇"+ "    "
+				+ "😇"+ "    "
+				+ "😇" + "    " + EOL;
 
 		assertEquals(actual, expected);
 
@@ -206,13 +206,13 @@ class BottleTestIsReceive {
 		bottleTest.receive(Emojis.ANGEL);
 
 		String actual = bottleTest.toString();
-		String expected = Table.empty + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL;
+		String expected = Table.empty + "    "
+				+ "😇" + "    "
+				+ "😇" + "    "
+				+ "😇" + "    "
+				+ "😇" + "    "
+				+ "😇" + "    "
+				+ "😇" + "    " + EOL;
 
 		assertEquals(expected, actual);
 	}
