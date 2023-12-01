@@ -31,21 +31,40 @@ public class Table {
 	 * @param bootleSize
 	 */
 	public Table(Filling[] symbols, int numberOfUsedSymbols, int seed, int bootleSize) {
-		int numSymbols = symbols.length < numberOfUsedSymbols ? symbols.length : numberOfUsedSymbols;
-		this.numSymbols = numSymbols;
-        this.bootleSize = DIFICULTY;
-        this.bottles = new Bottle[DEFAULT_BOTTLE_SIZE];
+		this.numSymbols = symbols.length < numberOfUsedSymbols ? symbols.length : numberOfUsedSymbols;
+		this.numberOfBottles = this.numSymbols+DIFICULTY;
+        this.bootleSize = bootleSize;
+        this.bottles = new Bottle[this.numberOfBottles];
 		this.symbols = symbols;
-		this.numberOfBottles = DEFAULT_BOTTLE_SIZE;
-
-		for(int i = 0; i < numberOfBottles; i++) {
-			Filling[] bottleContent = generateRandomFilling(symbols, this.numSymbols, bootleSize, seed);
-			this.bottles[i] = new Bottle(bottleContent);
+		if( seed == 1 ) {
+			// If seed is 1, generate a test filling so that thes tests can be reproduced
+			this.bottles = generateTestBottles(this.numberOfBottles, this.symbols, this.bootleSize, this.numSymbols);
+		} else {
+			for(int i = 0; i < numberOfBottles-DIFICULTY; i++) {
+				Filling[] bottleContent = generateRandomFilling(this.symbols, this.numSymbols, this.bootleSize, seed);
+				this.bottles[i] = new Bottle(bottleContent);
+			}
 		}
-        this.numberOfBottles = DEFAULT_BOTTLE_SIZE;
+		//Create empty bottles
+		for( int i = numberOfBottles - DIFICULTY ; i < numberOfBottles; i++) {
+			this.bottles[i] = new Bottle(bootleSize);
+		}
+
+	}
+	private static Bottle[] generateTestBottles(int numberOfBottles, Filling[] symbols, int bottleSize, int numsymbols) {
+		Bottle[] bottles = new Bottle[numberOfBottles];
+		for (int i=0; i<numberOfBottles-DIFICULTY; i++) {
+			Filling[] bottleContent = new Filling[bottleSize];
+			for (int j=0; j<bottleSize; j++) {
+				int fillingIndex = (j+i)%numsymbols;
+				bottleContent[j] = symbols[fillingIndex];
+			}
+			bottles[i] = new Bottle(bottleContent);
+		}
+		return bottles;
 	}
 
-	public static Filling[] generateRandomFilling(Filling[] symbols, int numSymbols, int bootleSize, int seed) {
+	private static Filling[] generateRandomFilling(Filling[] symbols, int numSymbols, int bootleSize, int seed) {
 		Random random = new Random(seed);
 		Filling[] bottleContent = new Filling[bootleSize];
 		for(int i = 0; i < bootleSize; i++) {
@@ -118,10 +137,15 @@ public class Table {
         if (source != null && destination != null && !destination.isFull() && !source.isEmpty()) {
             Filling fillingToPour = source.top();
             while (destination.receive(fillingToPour)) {
-                source.pourOut();
-                Filling nextFillingToPour = source.top();
-                if (nextFillingToPour == null || !fillingToPour.equals(fillingToPour)) break;
-				fillingToPour = nextFillingToPour;
+				try {
+                	source.pourOut();
+                	Filling nextFillingToPour = source.top();
+                	if (nextFillingToPour == null || !fillingToPour.equals(fillingToPour)) break;
+					fillingToPour = nextFillingToPour;
+				} catch (ArrayIndexOutOfBoundsException e) {
+					// Source is empty
+					break;
+				}
             }
         }		
 	}
@@ -161,9 +185,18 @@ public class Table {
 	 */
 	public String toString() {
 		String result = "";
-		for(int i = 0; i < numberOfBottles; i++) {
-			result += bottles[i].toString() + EOL;
+		// transpose the botles in the table so the string botles are in columns not in rows in the output
+		for(int i = 0; i < bootleSize; i++) {
+			for(int j = 0; j < numberOfBottles; j++) {
+				if(bottles[j].getContent()[i] != null) {
+					result += bottles[j].getContent()[i].toString() + "    ";
+				} else {
+					result += empty + "    ";
+				}
+			}
+			result += EOL;
 		}
+
 		return result;
 	}
 

@@ -219,8 +219,9 @@ public class Bottle implements Iterable<Filling>{
 			} else {
 				sb.append(contents[i].toString());
 			}
-			sb.append(EOL);
+			sb.append("    ");
 		}
+		sb.append(EOL);
 		return sb.toString();
 	}
 
