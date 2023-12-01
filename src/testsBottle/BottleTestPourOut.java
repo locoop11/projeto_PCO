@@ -27,13 +27,13 @@ class BottleTestPourOut {
 		bottleTest.pourOut();
 
 		String actual = bottleTest.toString();
-		String expected = Table.empty + EOL
-				+ Table.empty + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL
-				+ "😇"+ EOL
-				+ "😇"+ EOL
-				+ "😇" + EOL;
+		String expected = Table.empty + "    "
+				+ Table.empty + "    "
+				+ "😇" + "    "
+				+ "😇" + "    "
+				+ "😇"+ "    "
+				+ "😇"+ "    "
+				+ "😇" + "    " + EOL;
 
 		assertEquals(actual, expected);
 	}
@@ -58,13 +58,13 @@ class BottleTestPourOut {
 		bottleTest.pourOut();
 
 		String actual = bottleTest.toString();
-		String expected = Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL;
+		String expected = Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    " + EOL;
 
 		assertEquals(actual, expected);
 
@@ -88,13 +88,13 @@ class BottleTestPourOut {
 		bottleTest.pourOut();
 
 		String actual = bottleTest.toString();
-		String expected = Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ "😇"+ EOL
-				+ "😇" + EOL;
+		String expected = Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ "😇"+ "    "
+				+ "😇" + "    " + EOL;
 
 		assertEquals(actual, expected);
 
@@ -121,14 +121,14 @@ class BottleTestPourOut {
 
 		String actual = bottleTest.toString();
 		String expected = 
-				  Table.empty + EOL
-				+ Table.empty + EOL
-				+ "😍" + EOL
-				+ "😍" + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL;
+				  Table.empty + "    "
+				+ Table.empty + "    "
+				+ "😍" + "    "
+				+ "😍" + "    "
+				+ "😇" + "    "
+				+ "😇" + "    "
+				+ "😇" + "    "
+				+ "😇" + "    " + EOL;
 
 		assertEquals(actual, expected);
 
@@ -155,14 +155,14 @@ class BottleTestPourOut {
 
 		String actual = bottleTest.toString();
 		String expected = 
-				  Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL;
+				  Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ "😇" + "    "
+				+ "😇" + "    "
+				+ "😇" + "    "
+				+ "😇" + "    " + EOL;
 
 		assertEquals(actual, expected);
 
@@ -190,14 +190,14 @@ class BottleTestPourOut {
 
 		String actual = bottleTest.toString();
 		String expected = 
-				  Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ Table.empty + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL
-				+ "😇" + EOL;
+				  Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ Table.empty + "    "
+				+ "😇" + "    "
+				+ "😇" + "    "
+				+ "😇" + "    " + EOL;
 
 		assertEquals(actual, expected);
 
