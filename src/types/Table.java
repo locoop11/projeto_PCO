@@ -1,203 +1,284 @@
 package types;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
-
-//Notem que podem faltar métodos na classe que permitam lidar melhor com os objectos.
 public class Table {
 
-	public static String EOL = System.lineSeparator();
+    public static String EOL = System.lineSeparator();
 
-	public static final String empty = "⬜";
+    public static final String empty = "⬜";
 
-	public static final int DIFICULTY = 3;
+    public static final int DIFICULTY = 3;
 
-	public static final int DEFAULT_BOTTLE_SIZE = 5; 
-
-
-	private Bottle[] bottles;
-    private int numberOfBottles;
-    private Filling[] symbols;
-	private int numSymbols;
-    private int bootleSize;
-	private int seed;
+    public static final int DEFAULT_BOTTLE_SIZE = 5;
 
 
-	/**
-	 * 
-	 * @param symbols
-	 * @param numberOfUsedSymbols
-	 * @param seed
-	 * @param bootleSize
-	 */
-	public Table(Filling[] symbols, int numberOfUsedSymbols, int seed, int bootleSize) {
-		this.numSymbols = symbols.length < numberOfUsedSymbols ? symbols.length : numberOfUsedSymbols;
-		this.numberOfBottles = this.numSymbols+DIFICULTY;
-        this.bootleSize = bootleSize;
-        this.bottles = new Bottle[this.numberOfBottles];
-		this.symbols = symbols;
-		if( seed == 1 ) {
-			// If seed is 1, generate a test filling so that thes tests can be reproduced
-			this.bottles = generateTestBottles(this.numberOfBottles, this.symbols, this.bootleSize, this.numSymbols);
-		} else {
-			for(int i = 0; i < numberOfBottles-DIFICULTY; i++) {
-				Filling[] bottleContent = generateRandomFilling(this.symbols, this.numSymbols, this.bootleSize, seed);
-				this.bottles[i] = new Bottle(bottleContent);
-			}
-		}
-		//Create empty bottles
-		for( int i = numberOfBottles - DIFICULTY ; i < numberOfBottles; i++) {
-			this.bottles[i] = new Bottle(bootleSize);
-		}
-
-	}
-	private static Bottle[] generateTestBottles(int numberOfBottles, Filling[] symbols, int bottleSize, int numsymbols) {
-		Bottle[] bottles = new Bottle[numberOfBottles];
-		for (int i=0; i<numberOfBottles-DIFICULTY; i++) {
-			Filling[] bottleContent = new Filling[bottleSize];
-			for (int j=0; j<bottleSize; j++) {
-				int fillingIndex = (j+i)%numsymbols;
-				bottleContent[j] = symbols[fillingIndex];
-			}
-			bottles[i] = new Bottle(bottleContent);
-		}
-		return bottles;
-	}
-
-	private static Filling[] generateRandomFilling(Filling[] symbols, int numSymbols, int bootleSize, int seed) {
-		Random random = new Random(seed);
-		Filling[] bottleContent = new Filling[bootleSize];
-		for(int i = 0; i < bootleSize; i++) {
-			int randomIndex = random.nextInt(numSymbols);
-			bottleContent[i] = symbols[randomIndex];
-		}
-		return bottleContent;
-	}
+    private Bottle[] bottles;
+    private Map<Filling, Integer> symbolsUsedCount;
+    private int numberOfUsedSymbols;
+    private Filling[] contents;
+    private int bottleSize;    
 
 
-	/**
-	 * 
-	 */
-	public void regenerateTable() {
-		for(int i = 0; i < numberOfBottles; i++) {
-			Filling[] bottleContent = generateRandomFilling(symbols, this.numSymbols, bootleSize, seed);
-			this.bottles[i] = new Bottle(bottleContent);
-		}
-	}
 
-	/**
-	 * 
-	 * @param x
-	 * @return
-	 */
-	public boolean singleFilling(int x) {
-		return bottles[x].isSingleFilling();
-	}
+    /**
+     * Constructor for the Table class.
+     *
+     * @param contents              Array of possible symbols.
+     * @param numberOfUsedSymbols  Number of symbols to be used in the table.
+     * @param seed                 Seed for randomization.
+     * @param bottleSize           Size of the bottle.
+     */
+    public Table(Filling[] contents, int numberOfUsedSymbols, int seed, int bottleSize) {
+        Random random = new Random(seed);
+        this.numberOfUsedSymbols = numberOfUsedSymbols;
+        this.contents = contents;
+        this.bottleSize = bottleSize;
 
-	/**
-	 * 
-	 * @param x
-	 * @return
-	 */
-	public boolean isEmpty(int x) {
-		return bottles[x].isEmpty();
-	}
+        bottles = new Bottle[numberOfUsedSymbols + DIFICULTY];
+        symbolsUsedCount = new HashMap<>();
 
-	/**
-	 * 
-	 * @param x
-	 * @return
-	 */
-	public boolean isFull(int x) {
-		return bottles[x].isFull();
-	}
+        for (int i = 0; i < numberOfUsedSymbols; i++) {
+            Filling[] bottleContents = new Filling[bottleSize];
 
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean areAllFilled() {
-		for (Bottle bottle : bottles) {
-            if (!bottle.isFull()) {
-                return false;
+            for (int j = 0; j < bottleSize; j++) {
+                int numSymbols = Math.min(numberOfUsedSymbols, contents.length);
+                Filling symbol = contents[random.nextInt(numSymbols)];
+
+                int usedCount = symbolsUsedCount.getOrDefault(symbol, 0);
+                if (usedCount < bottleSize) {
+                    bottleContents[j] = symbol;
+                    symbolsUsedCount.put(symbol, usedCount + 1);
+                } else {
+                    j--;
+                }
+            }
+
+            bottles[i] = new Bottle(bottleContents);
+        }
+
+        for (int i = numberOfUsedSymbols; i < numberOfUsedSymbols + DIFICULTY; i++) {
+            Filling[] emptyBottle = new Filling[bottleSize];
+            for (int j = 0; j < bottleSize; j++) {
+                emptyBottle[j] = null;
+            }
+            bottles[i] = new Bottle(emptyBottle);
+        }
+    }
+    
+
+    /**
+     * Regenerates the contents of all bottles on the table.
+     */
+    public void regenerateTable() {
+        Random random = new Random();
+
+        symbolsUsedCount.clear();
+
+        for (int i = 0; i < numberOfUsedSymbols; i++) {
+            Filling[] bottleContents = new Filling[bottleSize];
+
+            for (int j = 0; j < bottleSize; j++) {
+                int numSymbols = Math.min(numberOfUsedSymbols, contents.length);
+                Filling symbol = contents[random.nextInt(numSymbols)];
+
+                int usedCount = symbolsUsedCount.getOrDefault(symbol, 0);
+                if (usedCount < bottleSize) {
+                    bottleContents[j] = symbol;
+                    symbolsUsedCount.put(symbol, usedCount + 1);
+                } else {
+                    j--;
+                }
+            }
+
+            bottles[i] = new Bottle(bottleContents);
+        }
+
+        for (int i = numberOfUsedSymbols; i < numberOfUsedSymbols + DIFICULTY; i++) {
+            Filling[] emptyBottle = new Filling[bottleSize];
+            for (int j = 0; j < bottleSize; j++) {
+                emptyBottle[j] = null;
+            }
+            bottles[i] = new Bottle(emptyBottle);
+        }
+    }
+
+
+    /**
+     * Checks if a specific bottle has a single filling.
+     *
+     * @param x The index of the bottle.
+     * @return True if the bottle has a single filling, false otherwise.
+     */
+    public boolean singleFilling(int x) {
+        if (x >= 0 && x < bottles.length) {
+            return bottles[x].isSingleFilling();
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a specific bottle is empty.
+     *
+     * @param x The index of the bottle.
+     * @return True if the bottle is empty, false otherwise.
+     */
+    public boolean isEmpty(int x) {
+        if (x >= 0 && x < bottles.length) {
+            return bottles[x].isEmpty();
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a specific bottle is full.
+     *
+     * @param x The index of the bottle.
+     * @return True if the bottle is full, false otherwise.
+     */
+    public boolean isFull(int x) {
+        if (x >= 0 && x < bottles.length) {
+            return bottles[x].isFull();
+        }
+        return false;
+    }
+
+   
+    /**
+     * Checks if all non-empty bottles on the table are filled with a single type of content.
+     *
+     * @return True if all non-empty bottles are filled with a single type of content, false otherwise.
+     */
+    /**
+     * Checks if all non-empty bottles on the table have the same contents.
+     *
+     * @return True if all non-empty bottles have the same contents, false otherwise.
+     */
+    /**
+     * Checks if all non-empty bottles on the table have the same contents.
+     *
+     * @return True if all non-empty bottles have the same contents, false otherwise.
+     */
+    public boolean areAllFilled() {
+    	Filling[] firstNonEmptyContents = null;
+        for (Bottle bottle : bottles) {
+            if (!bottle.isEmpty()) {
+                firstNonEmptyContents = bottle.getContent().clone();
+                break;
             }
         }
-        return true;
-	}
 
+        if (firstNonEmptyContents == null) {
+            return false;
+        }
 
-	/**
-	 * 
-	 * @param i
-	 * @param j
-	 */
-	public void pourFromTo(int i, int j) {
-		Bottle source = bottles[i];
-        Bottle destination = bottles[j];
-        if (source != null && destination != null && !destination.isFull() && !source.isEmpty()) {
-            Filling fillingToPour = source.top();
-            while (destination.receive(fillingToPour)) {
-				try {
-                	source.pourOut();
-                	Filling nextFillingToPour = source.top();
-                	if (nextFillingToPour == null || !fillingToPour.equals(fillingToPour)) break;
-					fillingToPour = nextFillingToPour;
-				} catch (ArrayIndexOutOfBoundsException e) {
-					// Source is empty
-					break;
-				}
+        for (Bottle bottle : bottles) {
+            if (!bottle.isEmpty()) {
+                Filling[] currentContents = bottle.getContent().clone();
+
+                if (!Arrays.equals(firstNonEmptyContents, currentContents)) {
+                    return false;
+                }
             }
-        }		
-	}
+        }
+
+        return true;
+    }
+
+
+
+
+
+    /**
+     * Pours the contents from one bottle to another.
+     *
+     * @param fromIndex The index of the source bottle.
+     * @param toIndex   The index of the destination bottle.
+     */
+    public void pourFromTo(int fromIndex, int toIndex) {
+        if (fromIndex >= 0 && fromIndex < bottles.length && toIndex >= 0 && toIndex < bottles.length) {
+            Bottle fromBottle = bottles[fromIndex];
+            Bottle toBottle = bottles[toIndex];
+
+            Filling topContent = fromBottle.topContent();
+
+            if (topContent != null && toBottle.receive(topContent)) {
+                fromBottle.pourOut();
+            }
+        }
+    }
+
+    /**
+     * Adds a new bottle to the table.
+     *
+     * @param bottle The bottle to be added.
+     */
+    public void addBootle(Bottle bottle) {
+           bottles = Arrays.copyOf(bottles, bottles.length + 1);
+           bottles[bottles.length - 1] = bottle;
+        
+    }
+
+    /**
+     * Gets the number of bottles on the table.
+     *
+     * @return The number of bottles on the table.
+     */
+    public int getSizeBottles() {
+        return bottleSize;
+    }
+
+
+
+    /**
+     * Gets the top filling of a specific bottle.
+     *
+     * @param x The index of the bottle.
+     * @return The top filling of the specified bottle.
+     * @throws ArrayIndexOutOfBoundsException if the bottle is empty.
+     */
+    public Filling top(int x) {
+        if (x >= 0 && x < bottles.length) {
+            if (!bottles[x].isEmpty()) {
+                return bottles[x].topContent();
+            } else {
+                throw new ArrayIndexOutOfBoundsException("Attempted to get top content of an empty bottle.");
+            }
+        }
+        throw new ArrayIndexOutOfBoundsException("Invalid bottle index.");
+    }
+
 
 	/**
-	 * Adds a botle to the botles array
-	 * @param bottle
+	 * *
 	 */
-	public void addBootle(Bottle bottle) {
-		Bottle[] newBotles = new Bottle[numberOfBottles + 1];
-		for(int i = 0; i < numberOfBottles; i++) {
-			newBotles[i] = bottles[i];
-		}
-		newBotles[numberOfBottles] = bottle;
-	}
+    public String toString() {
+        StringBuilder result = new StringBuilder();
 
-	/**
-	 * 
-	 * @return
-	 */
-	public int getSizeBottles() {
-		return DIFICULTY;
-	}
+        int maxBottleSize = 0;
+        for (Bottle bottle : bottles) {
+            maxBottleSize = Math.max(maxBottleSize, bottle.size());
+        }
 
+        for (int row = maxBottleSize - 1; row >= 0; row--) {
+            for (Bottle bottle : bottles) {
+                Filling[] contents = bottle.getContent();
+                if (row < contents.length && contents[row] != null) {
+                    result.append(contents[row].toString());
+                } else {
+                    result.append((bottle instanceof Cup && row >= bottle.size()) ? Cup.empty : empty);
+                }
+                result.append("    ");
+            }
+            result.append(EOL);
+        }
 
-	/**
-	 * 
-	 * @param x
-	 * @return
-	 */
-	public Filling top(int x) {
-		return bottles[x].top();
-	}
+        return result.toString();
+    }
 
-	/**
-	 * 
-	 */
-	public String toString() {
-		String result = "";
-		// transpose the botles in the table so the string botles are in columns not in rows in the output
-		for(int i = 0; i < bootleSize; i++) {
-			for(int j = 0; j < numberOfBottles; j++) {
-				if(bottles[j].getContent()[i] != null) {
-					result += bottles[j].getContent()[i].toString() + "    ";
-				} else {
-					result += empty + "    ";
-				}
-			}
-			result += EOL;
-		}
-
-		return result;
-	}
 
 }
+

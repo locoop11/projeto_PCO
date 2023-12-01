@@ -40,7 +40,7 @@ class TableTestAddBottle {
 				+ "😃    😡    😃    ⬜    ⬜    ⬜    😇    "+ Table.EOL
 				;
 
-		assertEquals(expected, actual);
+		assertEquals(actual, expected);
 	}
 
 	@Test
