@@ -163,31 +163,13 @@ public class Table {
      * @return True if all non-empty bottles have the same contents, false otherwise.
      */
     public boolean areAllFilled() {
-    	Filling[] firstNonEmptyContents = null;
         for (Bottle bottle : bottles) {
-            if (!bottle.isEmpty()) {
-                firstNonEmptyContents = bottle.getContent().clone();
-                break;
+            if (!bottle.isEmpty() && !bottle.isSingleFilling()) {
+                return false; 
             }
         }
-
-        if (firstNonEmptyContents == null) {
-            return false;
-        }
-
-        for (Bottle bottle : bottles) {
-            if (!bottle.isEmpty()) {
-                Filling[] currentContents = bottle.getContent().clone();
-
-                if (!Arrays.equals(firstNonEmptyContents, currentContents)) {
-                    return false;
-                }
-            }
-        }
-
         return true;
     }
-
 
 
 

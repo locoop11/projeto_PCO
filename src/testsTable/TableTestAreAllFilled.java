@@ -56,7 +56,7 @@ class TableTestAreAllFilled {
 		tableTeste = new Table(symbols, numberOfUsedSymbols, seed, bootleSize);
 		
 		boolean actual = tableTeste.areAllFilled();
-		boolean expected = false;
+		boolean expected = true;
 
 		assertEquals(expected, actual);
 	}
