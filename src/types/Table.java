@@ -20,7 +20,8 @@ public class Table {
     private Map<Filling, Integer> symbolsUsedCount;
     private int numberOfUsedSymbols;
     private Filling[] contents;
-    private int bottleSize;    
+    private int bottleSize;
+    private Random random;
 
 
 
@@ -33,7 +34,7 @@ public class Table {
      * @param bottleSize           Size of the bottle.
      */
     public Table(Filling[] contents, int numberOfUsedSymbols, int seed, int bottleSize) {
-        Random random = new Random(seed);
+        this.random = new Random(seed);
         this.numberOfUsedSymbols = numberOfUsedSymbols;
         this.contents = contents;
         this.bottleSize = bottleSize;
@@ -71,15 +72,18 @@ public class Table {
     
 
     /**
+     * Regenerates the contents of all bottles on the table using random symbols from the given contents array.
+     * Note that it uses the setContent method in the Bottle class to set the regenerated contents for each bottle.
+     */
+    /**
      * Regenerates the contents of all bottles on the table.
      */
     public void regenerateTable() {
-        Random random = new Random();
 
         symbolsUsedCount.clear();
 
         for (int i = 0; i < numberOfUsedSymbols; i++) {
-            Filling[] bottleContents = new Filling[bottleSize];
+            Filling[] bottleContents = bottles[i].getContent();
 
             for (int j = 0; j < bottleSize; j++) {
                 int numSymbols = Math.min(numberOfUsedSymbols, contents.length);
@@ -94,7 +98,7 @@ public class Table {
                 }
             }
 
-            bottles[i] = new Bottle(bottleContents);
+            bottles[i].setContent(bottleContents);
         }
 
         for (int i = numberOfUsedSymbols; i < numberOfUsedSymbols + DIFICULTY; i++) {
@@ -102,9 +106,14 @@ public class Table {
             for (int j = 0; j < bottleSize; j++) {
                 emptyBottle[j] = null;
             }
-            bottles[i] = new Bottle(emptyBottle);
+            bottles[i].setContent(emptyBottle);
         }
     }
+
+
+
+
+
 
 
     /**
@@ -147,16 +156,7 @@ public class Table {
     }
 
    
-    /**
-     * Checks if all non-empty bottles on the table are filled with a single type of content.
-     *
-     * @return True if all non-empty bottles are filled with a single type of content, false otherwise.
-     */
-    /**
-     * Checks if all non-empty bottles on the table have the same contents.
-     *
-     * @return True if all non-empty bottles have the same contents, false otherwise.
-     */
+   
     /**
      * Checks if all non-empty bottles on the table have the same contents.
      *

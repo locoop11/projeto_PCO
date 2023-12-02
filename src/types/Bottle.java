@@ -1,6 +1,7 @@
 package types;
 
 import java.util.Iterator;
+import java.util.Arrays;
 
 //Notem que podem faltar métodos na classe que permitam lidar melhor com os objectos.
 public class Bottle implements Iterable<Filling>{
@@ -24,7 +25,7 @@ public class Bottle implements Iterable<Filling>{
 		this.size = DEFAULT_SIZE;
         this.contents = new Filling[size];
         for (int i = 0; i < size; i++) {
-            this.contents[i] = null; // Assuming null represents an empty space
+            this.contents[i] = null; 
         }
 	}
 
@@ -36,7 +37,7 @@ public class Bottle implements Iterable<Filling>{
 		this.size = size;
         this.contents = new Filling[size];
         for (int i = 0; i < size; i++) {
-            this.contents[i] = null; // Assuming null represents an empty space
+            this.contents[i] = null;
         }
 	}
 
@@ -117,14 +118,7 @@ public class Bottle implements Iterable<Filling>{
         return space;	
 	}
 
-	/**
-	 * 
-	 * @param n
-	
-	public void pourOut(int n) {
 
-	}
-	*/
 
 	/**
 	 * 
@@ -139,16 +133,7 @@ public class Bottle implements Iterable<Filling>{
 	}
 
 
-	/**
-	 * No need to implement this method
-	 * @param s
-	 * @param howMany
-	 * @return
-	
-	public boolean receive(Filling s, int howMany) {
-		return false;
-	}
-	*/
+
 
 
 	/**
@@ -197,7 +182,13 @@ public class Bottle implements Iterable<Filling>{
         return true;
 	}
 
-
+	public void setContent(Filling[] newContent) {
+	    if (newContent.length == size) {
+	        this.contents = Arrays.copyOf(newContent, size);
+	    } else {
+	        throw new IllegalArgumentException("Invalid array length for setting bottle contents.");
+	    }
+	}
 
 	/**
 	 * 
