@@ -27,11 +27,11 @@ class FinalScoringGameprovideHelp {
 		game.provideHelp();
 
 		String actual = game.toString();
-		String expected = "Score: 900" + EOL
-				+ "😃    😒    😡    ⬜    ⬜    ⬜    ⬜    "+EOL
-				+ "😒    😡    😡    ⬜    ⬜    ⬜    ⬜    "+EOL
-				+ "😒    😒    😃    ⬜    ⬜    ⬜    ⬜    "+EOL
-				+ "😃    😡    😃    ⬜    ⬜    ⬜    ⬜    "+EOL
+		String expected = "Score: 1000" + EOL +
+				"😡    😒    😃    ⬜    ⬜    ⬜    " + EOL +
+				"😒    😃    😃    ⬜    ⬜    ⬜    " + EOL +
+				"😡    😒    😃    ⬜    ⬜    ⬜    " + EOL +
+				"😡    😡    😒    ⬜    ⬜    ⬜    " + EOL
 				+ "Status: The round is not finished." + EOL
 				+ "0 moves have been used until now."+EOL;
 
@@ -59,7 +59,7 @@ class FinalScoringGameprovideHelp {
 
 		String actual = game.toString();
 		String expected = 
-				"Score: 500" + EOL
+				"Score: 1000" + EOL
 				+ "😃    😒    😡    ⬜    ⬜    ⬜    ⬜    ⬜    ⬜    ⬜    ⬜    "+ EOL
 				+ "😒    😡    😡    ⬜    ⬜    ⬜    ⬜    ⬜    ⬜    ⬜    ⬜    "+ EOL
 				+ "😒    😒    😃    ⬜    ⬜    ⬜    ⬜    ⬜    ⬜    ⬜    ⬜    "+ EOL

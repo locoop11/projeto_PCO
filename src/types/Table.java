@@ -181,14 +181,20 @@ public class Table {
      * @param toIndex   The index of the destination bottle.
      */
     public void pourFromTo(int fromIndex, int toIndex) {
-        if (fromIndex >= 0 && fromIndex < bottles.length && toIndex >= 0 && toIndex < bottles.length) {
-            Bottle fromBottle = bottles[fromIndex];
-            Bottle toBottle = bottles[toIndex];
-
-            Filling topContent = fromBottle.topContent();
-
-            if (topContent != null && toBottle.receive(topContent)) {
-                fromBottle.pourOut();
+        Bottle source = bottles[fromIndex];
+        Bottle destination = bottles[toIndex];
+        if (source != null && destination != null && !destination.isFull() && !source.isEmpty()) {
+            Filling fillingToPour = source.top();
+            while (destination.receive(fillingToPour)) {
+				try {
+                	source.pourOut();
+                	Filling nextFillingToPour = source.top();
+                	if (nextFillingToPour == null || !fillingToPour.equals(nextFillingToPour)) break;
+					fillingToPour = nextFillingToPour;
+				} catch (ArrayIndexOutOfBoundsException e) {
+					// Source is empty
+					break;
+				}
             }
         }
     }
@@ -210,7 +216,7 @@ public class Table {
      * @return The number of bottles on the table.
      */
     public int getSizeBottles() {
-        return bottleSize;
+        return numberOfUsedSymbols + DIFICULTY;
     }
 
 

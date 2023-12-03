@@ -36,7 +36,7 @@ class BettingGameprovideHelp {
 				+ "😒    😡    😡    ⬜    ⬜    ⬜    ⚪    "+EOL
 				+ "😒    😒    😃    ⬜    ⬜    ⬜    ⚪    "+EOL
 				+ "😃    😡    😃    ⬜    ⬜    ⬜    ⬜    "+EOL
-				+ "Status: 0 moves have been used until now. You still have 4 moves left."+EOL;
+				+ "Status: 1 moves have been used until now. You still have 4 moves left."+EOL;
 
 		assertEquals(expected, actual);
 
@@ -63,13 +63,12 @@ class BettingGameprovideHelp {
 		
 		String actual = game.toString();
 		String expected = 
-				 "Score: 900" + EOL
+				 "Score: 1000" + EOL
 				 + "😃    😒    😡    ⬜    ⬜    ⬜    ⚪    ⚪    ⚪    ⚪    ⚪    "+ EOL
 				 + "😒    😡    😡    ⬜    ⬜    ⬜    ⚪    ⚪    ⚪    ⚪    ⚪    "+ EOL
 				 + "😒    😒    😃    ⬜    ⬜    ⬜    ⚪    ⚪    ⚪    ⚪    ⚪    "+ EOL
 				 + "😃    😡    😃    ⬜    ⬜    ⬜    ⬜    ⬜    ⬜    ⬜    ⬜    "+ EOL
-				 + "Status: This round is finihed."+ EOL
-				 + "0 moves were used." + EOL;
+				 + "Status: 5 moves have been used until now. You still have 0 moves left." + EOL;
 
 		assertEquals(expected, actual);
 

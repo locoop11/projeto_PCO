@@ -67,7 +67,7 @@ public class BettingFillingGame extends AbstractFillingGame{
 	 * @return
 	 */
 	public int numberOfPlaysLeft() {
-		return 0;
+		return maxPlays - jogadas;
 	}
 
 
@@ -88,23 +88,18 @@ public class BettingFillingGame extends AbstractFillingGame{
 	public void updateScore() {
         if (isRoundFinished()) {
             int numberOfPlays = jogadas();
-            if (numberOfPlays <= maxPlays) {
-                score += 2 * bet;
+            if (numberOfPlays < maxPlays) {
+                score += (maxPlays-numberOfPlays) * bet;
             } else {
-                score -= bet;
+                score = 0;
             }
         }
     }
 
 	public String toString() {
         // Provide a textual description of the game
-        return "BettingFillingGame{" +
-                "score=" + score +
-                ", bet=" + bet +
-                ", maxPlays=" + maxPlays +
-                ", jogadas=" + jogadas +
-                '}';
+        return "Score: " + score + Table.EOL + this.table.toString() + 
+				"Status: " + jogadas + " moves have been used until now. You still have " + (maxPlays - jogadas )+ " moves left."
+				+ Table.EOL;
     }
-
-
 }

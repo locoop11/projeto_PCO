@@ -27,10 +27,10 @@ class FinalScoringGameConstructors {
 
 		String actual = game.toString();
 		String expected = "Score: 0" + EOL +
-				  "😃    😒    😡    ⬜    ⬜    ⬜    " + EOL
-				+ "😒    😡    😡    ⬜    ⬜    ⬜    " + EOL
-				+ "😒    😒    😃    ⬜    ⬜    ⬜    " + EOL
-				+ "😃    😡    😃    ⬜    ⬜    ⬜    " + EOL
+				  "😡    😒    😃    ⬜    ⬜    ⬜    " + EOL
+				+ "😒    😃    😃    ⬜    ⬜    ⬜    " + EOL
+				+ "😡    😒    😃    ⬜    ⬜    ⬜    " + EOL
+				+ "😡    😡    😒    ⬜    ⬜    ⬜    " + EOL
 				+ "Status: The round is not finished." + EOL
 				+ "0 moves have been used until now." + EOL;
 
@@ -53,10 +53,10 @@ class FinalScoringGameConstructors {
 
 		String actual = game.toString();
 		String expected = "Score: 100" + EOL +
-				  "😃    😒    😡    ⬜    ⬜    ⬜    " + EOL
-				+ "😒    😡    😡    ⬜    ⬜    ⬜    " + EOL
-				+ "😒    😒    😃    ⬜    ⬜    ⬜    " + EOL
-				+ "😃    😡    😃    ⬜    ⬜    ⬜    " + EOL
+				  "😡    😒    😃    ⬜    ⬜    ⬜    " + EOL
+				+ "😒    😃    😃    ⬜    ⬜    ⬜    " + EOL
+				+ "😡    😒    😃    ⬜    ⬜    ⬜    " + EOL
+				+ "😡    😡    😒    ⬜    ⬜    ⬜    " + EOL
 				+ "Status: The round is not finished."+ EOL
 				+ "0 moves have been used until now." + EOL;
 

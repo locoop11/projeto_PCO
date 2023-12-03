@@ -5,7 +5,7 @@ public abstract class AbstractFillingGame implements FillingGame {
 	public static String EOL = System.lineSeparator();
 	protected Table table;
 	protected int numberOfRounds;
-	protected Bottle[] bottles;
+	//protected Bottle[] bottles;
 	public static final String empty = "⬜";
 	protected int jogadas;
 
@@ -58,6 +58,7 @@ public abstract class AbstractFillingGame implements FillingGame {
 	            table.pourFromTo(x, y);
 	            jogadas++;
 	        }
+			updateScore();
 	 }
 
 	/**
@@ -138,12 +139,12 @@ public abstract class AbstractFillingGame implements FillingGame {
         StringBuilder result = new StringBuilder();
 
         int maxBottleSize = 0;
-        for (Bottle bottle : bottles) {
+        for (Bottle bottle : this.table.getBottles()) {
             maxBottleSize = Math.max(maxBottleSize, bottle.size());
         }
 
         for (int row = maxBottleSize - 1; row >= 0; row--) {
-            for (Bottle bottle : bottles) {
+            for (Bottle bottle : this.table.getBottles()) {
                 Filling[] contents = bottle.getContent();
                 if (row < contents.length && contents[row] != null) {
                     result.append(contents[row].toString());
