@@ -262,5 +262,10 @@ public class Table {
     }
 
 
+	public Bottle[] getBottles() {
+		return bottles;
+	}
+
+
 }
 

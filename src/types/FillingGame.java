@@ -47,5 +47,11 @@ public interface FillingGame {
 	 */
 	public int score();
 
+	/**
+	 * 
+	 * @return
+	 */
+	boolean areAllFilled();
+
 
 }

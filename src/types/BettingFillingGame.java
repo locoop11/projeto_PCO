@@ -2,6 +2,9 @@ package types;
 
 //Notem que podem faltar métodos na classe que permitam lidar melhor com os objectos.
 public class BettingFillingGame extends AbstractFillingGame{
+	 	private int bet;
+	    private int maxPlays;
+	    private int score;
 
 
 
@@ -16,7 +19,13 @@ public class BettingFillingGame extends AbstractFillingGame{
 	 * @param maxPlays
 	 */
 	public BettingFillingGame(Filling[] symbols, int numberOfUsedSymbols, int seed, 
-			int bootleSize, int score, int bet, int maxPlays) {
+			int bottleSize, int score, int bet, int maxPlays) {
+		
+		super(symbols, numberOfUsedSymbols, seed, bottleSize);
+        this.score = score;
+        this.bet = bet;
+        this.maxPlays = maxPlays;
+		
 	
 	}
 
@@ -26,8 +35,12 @@ public class BettingFillingGame extends AbstractFillingGame{
 	 */
 	@Override
 	public void provideHelp() {
-
-	}
+        if (jogadas < maxPlays) {
+            Bottle newBottle = new Cup(); // Assuming Cup is a subclass of Bottle
+            table.addBootle(newBottle);
+            jogadas++;
+        }
+    }
 
 
 	
@@ -37,17 +50,16 @@ public class BettingFillingGame extends AbstractFillingGame{
 	 */
 	@Override
 	public int score() {
-		return 0;
-	}
+        return score;
+    }
 
 	/**
 	 * 
 	 */
 	@Override
 	public boolean isRoundFinished() {
-		return false;
-
-	}
+        return areAllFilled() || jogadas >= maxPlays;
+    }
 
 
 	/**
@@ -65,8 +77,8 @@ public class BettingFillingGame extends AbstractFillingGame{
 	 */
 	@Override
 	public Bottle getNewBootle() {
-		return null;
-	}
+        return new Cup(); // Assuming Cup is a subclass of Bottle
+    }
 
 	/**
 	 * 
@@ -74,10 +86,25 @@ public class BettingFillingGame extends AbstractFillingGame{
 	 */
 	@Override
 	public void updateScore() {
+        if (isRoundFinished()) {
+            int numberOfPlays = jogadas();
+            if (numberOfPlays <= maxPlays) {
+                score += 2 * bet;
+            } else {
+                score -= bet;
+            }
+        }
+    }
 
-	}
-
-
+	public String toString() {
+        // Provide a textual description of the game
+        return "BettingFillingGame{" +
+                "score=" + score +
+                ", bet=" + bet +
+                ", maxPlays=" + maxPlays +
+                ", jogadas=" + jogadas +
+                '}';
+    }
 
 
 }
