@@ -1,5 +1,9 @@
 package types;
 
+/**
+ * Abstract class AbstractFillingGame - Class that implements the interface
+ * FillingGame.
+ */
 public abstract class AbstractFillingGame implements FillingGame {
 
 	public static String EOL = System.lineSeparator();
@@ -23,31 +27,34 @@ public abstract class AbstractFillingGame implements FillingGame {
 	public static final String empty = "⬜";
 
 	/**
+	 * Constructor for objects of class AbstractFillingGame
 	 * 
-	 * @param symbols
-	 * @param numberOfUsedSymbols
-	 * @param seed
-	 * @param bottleSize
-	 * @param contents
+	 * @param symbols             - Array of fillings that can be used in the game.
+	 * @param numberOfUsedSymbols - Number of fillings that will be used in the
+	 *                            game.
+	 * @param seed                - Seed for randomization.
+	 * @param bottleSize          - Size of the bottle.
 	 */
-	public AbstractFillingGame(Filling[] contents, int numberOfUsedSymbols, int seed, int bottleSize) {
+	public AbstractFillingGame(Filling[] symbols, int numberOfUsedSymbols, int seed, int bottleSize) {
 
-		this.table = new Table(contents, numberOfUsedSymbols, seed, bottleSize);
+		this.table = new Table(symbols, numberOfUsedSymbols, seed, bottleSize);
 		this.numberOfRounds = 0;
 		this.jogadas = 0;
 	}
 
 	/**
+	 * Function to get the number of rounds played.
 	 * 
-	 * @return
+	 * @return - Returns the number of rounds played.
 	 */
 	public int jogadas() {
 		return this.jogadas;
 	}
 
 	/**
+	 * Function to get the bottle size.
 	 * 
-	 * @return
+	 * @return - Returns the bottle size.
 	 */
 
 	public int getBottlesSize() {
@@ -56,8 +63,8 @@ public abstract class AbstractFillingGame implements FillingGame {
 
 	/**
 	 * 
-	 * @param x
-	 * @param y
+	 * @param x - Position of the bottle to get filling from.
+	 * @param y - Position of the bottle to get filling to.
 	 */
 	@Override
 	public void play(int x, int y) {
@@ -83,6 +90,7 @@ public abstract class AbstractFillingGame implements FillingGame {
 	}
 
 	/**
+	 * Creates a new bottle and adds it to the table.
 	 * 
 	 */
 	@Override
@@ -92,27 +100,34 @@ public abstract class AbstractFillingGame implements FillingGame {
 	}
 
 	/**
+	 * Function to create a new bottle.
 	 * 
-	 * @return
+	 * @return - Returns the bottle.
 	 */
 	public abstract Bottle getNewBootle(); // .----------------------------------------------------------------
 
 	/**
+	 * Updates the score of the game.
 	 * 
-	 * @return
 	 */
 	public abstract void updateScore(); // .----------------------------------------------------------------
 
 	/**
+	 * Gets the top filling of a bottle.
 	 * 
-	 * @param x
-	 * @return
+	 * @param x The index of the bottle.
+	 * @return The top filling of the bottle.
 	 */
 	@Override
 	public Filling top(int x) {
 		return this.table.top(x);
 	}
 
+	/**
+	 * Check us the bottle has only one filling.
+	 * 
+	 * @return True if the bottle has only one filling, false otherwise.
+	 */
 	@Override
 	public boolean singleFilling(int x) {
 		return this.table.singleFilling(x);
@@ -133,7 +148,7 @@ public abstract class AbstractFillingGame implements FillingGame {
 	public abstract int score(); // .----------------------------------------------------------------
 
 	/**
-	 * 
+	 * Starts a new round.
 	 */
 	@Override
 	public void startNewRound() {
@@ -144,6 +159,7 @@ public abstract class AbstractFillingGame implements FillingGame {
 	}
 
 	/**
+	 * Checks is all the botles in the table are singleFilled
 	 * 
 	 * @return
 	 */

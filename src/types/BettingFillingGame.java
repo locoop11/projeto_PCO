@@ -9,14 +9,15 @@ public class BettingFillingGame extends AbstractFillingGame {
 	private int playsLeft;
 
 	/**
+	 * Constructor for objects of class BettingFillingGame
 	 * 
-	 * @param symbols
-	 * @param numberOfUsedSymbols
-	 * @param seed
-	 * @param bootleSize
-	 * @param score
-	 * @param bet
-	 * @param maxjogadas
+	 * @param symbols             - Array of fillings that can be used in the game.
+	 * @param numberOfUsedSymbols - Number of fillings that will be used in the
+	 * @param seed                - Seed for randomization.
+	 * @param bootleSize          - Size of each bottle.
+	 * @param score               - Initial score.
+	 * @param bet                 - Bet for each finishing the game.
+	 * @param maxjogadas          - Maximum number of plays.
 	 */
 	public BettingFillingGame(Filling[] symbols, int numberOfUsedSymbols, int seed,
 			int bottleSize, int score, int bet, int maxjogadas) {
@@ -31,6 +32,7 @@ public class BettingFillingGame extends AbstractFillingGame {
 	}
 
 	/**
+	 * Creates a new bottle of type cup and adds it to the table.
 	 * 
 	 */
 	@Override
@@ -46,15 +48,18 @@ public class BettingFillingGame extends AbstractFillingGame {
 	}
 
 	/**
-	 * 
+	 * get the score
 	 */
 	@Override
 	public int score() {
 		return this.score;
 	}
 
-	/** 
+	/**
+	 * Plays by pouring from bottle x to bottle y.
 	 * 
+	 * @param x - Position of the bottle to get filling from.
+	 * @param y - Position of the bottle to get filling to.
 	 */
 	@Override
 	public void play(int x, int y) {
@@ -63,7 +68,7 @@ public class BettingFillingGame extends AbstractFillingGame {
 	}
 
 	/**
-	 * 
+	 * Checks if the round is finished.
 	 */
 	@Override
 	public boolean isRoundFinished() {
@@ -76,16 +81,18 @@ public class BettingFillingGame extends AbstractFillingGame {
 	}
 
 	/**
+	 * Gets the number of plays left.
 	 * 
-	 * @return
+	 * @return - Returns the number of plays left.
 	 */
 	public int numberOfPlaysLeft() {
 		return this.playsLeft;
 	}
 
 	/**
+	 * Creates a new bottle
 	 * 
-	 * @return
+	 * @return - Returns a new bottle.
 	 */
 	@Override
 	public Bottle getNewBootle() {
@@ -93,8 +100,9 @@ public class BettingFillingGame extends AbstractFillingGame {
 	}
 
 	/**
+	 * Updates the score according to the number of plays used. If the round is not
+	 * finished, the score is not updated.
 	 * 
-	 * @return
 	 */
 	@Override
 	public void updateScore() {

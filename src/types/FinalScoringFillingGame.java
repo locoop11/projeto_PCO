@@ -30,6 +30,9 @@ public class FinalScoringFillingGame extends AbstractFillingGame {
         this.score = score;
     }
 
+    /**
+     * Provides help by adding a new bottle to the table abd updates score
+     */
     @Override
     public void provideHelp() {
         super.provideHelp();
@@ -40,6 +43,14 @@ public class FinalScoringFillingGame extends AbstractFillingGame {
         }
     }
 
+    /**
+     * Updates score according to the number of moves used. If the number of moves
+     * is less than 10, the score is 1000. If the number of moves is between 10 and
+     * 15, the score is 500. If the number of moves is between 15 and 25, the score
+     * is 200. If none of the previous conditions are met, the score is 0.
+     * 
+     * 
+     */
     @Override
     public void updateScore() {
         if (this.jogadas <= 10) {
@@ -52,6 +63,13 @@ public class FinalScoringFillingGame extends AbstractFillingGame {
             this.score = 0;
         }
     }
+
+    /**
+     * Checks if the round is finished. If it is, updates the score. A round is
+     * finished when all bottles are SingleFilled.
+     * 
+     * 
+     */
 
     @Override
     public boolean isRoundFinished() {
