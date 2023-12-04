@@ -31,10 +31,10 @@ class FinalScoringGamePlay {
 		
 		String actual = game.toString();
 		String expected = "Score: 0" + EOL +
-				  "😡    😒    ⬜    ⬜    ⬜    ⬜    " + EOL
-				+ "😒    😃    ⬜    😃    ⬜    ⬜    " + EOL
-				+ "😡    😒    ⬜    😃    ⬜    ⬜    " + EOL
-				+ "😡    😡    😒    😃    ⬜    ⬜    " + EOL
+				  "😃    😒    ⬜    ⬜    ⬜    ⬜    " + EOL
+				+ "😒    😡    ⬜    ⬜    ⬜    ⬜    " + EOL
+				+ "😒    😒    😃    😡    ⬜    ⬜    " + EOL
+				+ "😃    😡    😃    😡    ⬜    ⬜    " + EOL
 				+ "Status: The round is not finished." + EOL
 				+ "1 moves have been used until now." + EOL;
 
@@ -66,13 +66,13 @@ class FinalScoringGamePlay {
 		
 		
 		String actual = game.toString();
-		String expected = "Score: 2000" + EOL +
-				    "⬜    ⬜    ⬜    😃    ⬜    ⬜    " + EOL
-				  + "😡    ⬜    ⬜    😃    😒    ⬜    " + EOL
-				  + "😡    ⬜    ⬜    😃    😒    ⬜    " + EOL
-				  + "😡    😡    😒    😃    😒    ⬜    " + EOL
-				+ "Status: The round is finished." + EOL
-				+ "8 moves have been used until now." + EOL;
+		String expected = "Score: 1000" + EOL +
+				    "😃    ⬜    ⬜    😡    😒    ⬜    " + EOL
+				  + "😃    ⬜    ⬜    😡    😒    ⬜    " + EOL
+				  + "😃    ⬜    ⬜    😡    😒    ⬜    " + EOL
+				  + "😃    ⬜    ⬜    😡    😒    ⬜    " + EOL
+				+ "Status: This round is finished." + EOL
+				+ "8 moves were used." + EOL;
 
 		assertEquals(expected, actual);
 

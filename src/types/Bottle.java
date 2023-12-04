@@ -142,14 +142,21 @@ public class Bottle implements Iterable<Filling>{
 	 * @return
 	 */
 	public boolean receive(Filling s) {
-	    if (!isFull() && s != null) {
-			for (int i = 0 ; i < size; i++) {
-				if (contents[i] == null) {
-					contents[i] = s;
-					return true;
-				}
-	        }
-	    }
+		if( isEmpty() ) {
+			contents[0] = s;
+			return true;
+		}
+		Filling top = top();
+		if( isFull() || s == null) {
+			return false;
+		}
+	    
+		for (int i = 0 ; i < size; i++) {
+			if (contents[i] == null && top().equals(s)) {
+				contents[i] = s;
+				return true;
+			}
+		}
 	    return false;
 	}
 

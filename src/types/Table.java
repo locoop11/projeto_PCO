@@ -15,7 +15,6 @@ public class Table {
 
     public static final int DEFAULT_BOTTLE_SIZE = 5;
 
-
     private Bottle[] bottles;
     private Map<Filling, Integer> symbolsUsedCount;
     private int numberOfUsedSymbols;
@@ -23,15 +22,13 @@ public class Table {
     private int bottleSize;
     private Random random;
 
-
-
     /**
      * Constructor for the Table class.
      *
-     * @param contents              Array of possible symbols.
-     * @param numberOfUsedSymbols  Number of symbols to be used in the table.
-     * @param seed                 Seed for randomization.
-     * @param bottleSize           Size of the bottle.
+     * @param contents            Array of possible symbols.
+     * @param numberOfUsedSymbols Number of symbols to be used in the table.
+     * @param seed                Seed for randomization.
+     * @param bottleSize          Size of the bottle.
      */
     public Table(Filling[] contents, int numberOfUsedSymbols, int seed, int bottleSize) {
         this.random = new Random(seed);
@@ -69,11 +66,12 @@ public class Table {
             bottles[i] = new Bottle(emptyBottle);
         }
     }
-    
 
     /**
-     * Regenerates the contents of all bottles on the table using random symbols from the given contents array.
-     * Note that it uses the setContent method in the Bottle class to set the regenerated contents for each bottle.
+     * Regenerates the contents of all bottles on the table using random symbols
+     * from the given contents array.
+     * Note that it uses the setContent method in the Bottle class to set the
+     * regenerated contents for each bottle.
      */
     /**
      * Regenerates the contents of all bottles on the table.
@@ -109,12 +107,6 @@ public class Table {
             bottles[i].setContent(emptyBottle);
         }
     }
-
-
-
-
-
-
 
     /**
      * Checks if a specific bottle has a single filling.
@@ -155,24 +147,20 @@ public class Table {
         return false;
     }
 
-   
-   
     /**
      * Checks if all non-empty bottles on the table have the same contents.
      *
-     * @return True if all non-empty bottles have the same contents, false otherwise.
+     * @return True if all non-empty bottles have the same contents, false
+     *         otherwise.
      */
     public boolean areAllFilled() {
         for (Bottle bottle : bottles) {
             if (!bottle.isEmpty() && !bottle.isSingleFilling()) {
-                return false; 
+                return false;
             }
         }
         return true;
     }
-
-
-
 
     /**
      * Pours the contents from one bottle to another.
@@ -184,17 +172,14 @@ public class Table {
         Bottle source = bottles[fromIndex];
         Bottle destination = bottles[toIndex];
         if (source != null && destination != null && !destination.isFull() && !source.isEmpty()) {
-            Filling fillingToPour = source.top();
-            while (destination.receive(fillingToPour)) {
-				try {
-                	source.pourOut();
-                	Filling nextFillingToPour = source.top();
-                	if (nextFillingToPour == null || !fillingToPour.equals(nextFillingToPour)) break;
-					fillingToPour = nextFillingToPour;
-				} catch (ArrayIndexOutOfBoundsException e) {
-					// Source is empty
-					break;
-				}
+            try {
+                Filling fillingToPour = source.top();
+
+                if (destination.receive(fillingToPour) == true) {
+                    source.pourOut();
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                // Source is empty
             }
         }
     }
@@ -205,21 +190,19 @@ public class Table {
      * @param bottle The bottle to be added.
      */
     public void addBootle(Bottle bottle) {
-           bottles = Arrays.copyOf(bottles, bottles.length + 1);
-           bottles[bottles.length - 1] = bottle;
-        
+        bottles = Arrays.copyOf(bottles, bottles.length + 1);
+        bottles[bottles.length - 1] = bottle;
+
     }
 
     /**
-     * Gets the number of bottles on the table.
+     * Gets the sizer of bottles on the table.
      *
-     * @return The number of bottles on the table.
+     * @return The nsize of each bottle on the table.
      */
     public int getSizeBottles() {
-        return numberOfUsedSymbols + DIFICULTY;
+        return bottleSize;
     }
-
-
 
     /**
      * Gets the top filling of a specific bottle.
@@ -239,10 +222,9 @@ public class Table {
         throw new ArrayIndexOutOfBoundsException("Invalid bottle index.");
     }
 
-
-	/**
-	 * *
-	 */
+    /**
+     * *
+     */
     public String toString() {
         StringBuilder result = new StringBuilder();
 
@@ -267,11 +249,8 @@ public class Table {
         return result.toString();
     }
 
-
-	public Bottle[] getBottles() {
-		return bottles;
-	}
-
+    public Bottle[] getBottles() {
+        return bottles;
+    }
 
 }
-
