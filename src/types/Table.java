@@ -78,7 +78,7 @@ public class Table {
      */
     public void regenerateTable() {
 
-        symbolsUsedCount.clear();
+        symbolsUsedCount = new HashMap<>();
 
         for (int i = 0; i < numberOfUsedSymbols; i++) {
             Filling[] bottleContents = bottles[i].getContent();
@@ -169,17 +169,14 @@ public class Table {
      * @param toIndex   The index of the destination bottle.
      */
     public void pourFromTo(int fromIndex, int toIndex) {
-        Bottle source = bottles[fromIndex];
-        Bottle destination = bottles[toIndex];
-        if (source != null && destination != null && !destination.isFull() && !source.isEmpty()) {
-            try {
-                Filling fillingToPour = source.top();
+        if (fromIndex >= 0 && fromIndex < bottles.length && toIndex >= 0 && toIndex < bottles.length) {
+            Bottle fromBottle = bottles[fromIndex];
+            Bottle toBottle = bottles[toIndex];
 
-                if (destination.receive(fillingToPour) == true) {
-                    source.pourOut();
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                // Source is empty
+            Filling topContent = fromBottle.topContent();
+
+            if (topContent != null && toBottle.receive(topContent)) {
+                fromBottle.pourOut();
             }
         }
     }
@@ -196,9 +193,9 @@ public class Table {
     }
 
     /**
-     * Gets the sizer of bottles on the table.
+     * Gets the size of bottles on the table.
      *
-     * @return The nsize of each bottle on the table.
+     * @return The size of each bottle on the table.
      */
     public int getSizeBottles() {
         return bottleSize;

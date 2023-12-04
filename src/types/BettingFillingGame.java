@@ -3,8 +3,9 @@ package types;
 //Notem que podem faltar métodos na classe que permitam lidar melhor com os objectos.
 public class BettingFillingGame extends AbstractFillingGame{
 	 	private int bet;
-	    private int maxPlays;
+	    private int maxjogadas;
 	    private int score;
+	    private int playsLeft;
 
 
 
@@ -16,15 +17,16 @@ public class BettingFillingGame extends AbstractFillingGame{
 	 * @param bootleSize
 	 * @param score
 	 * @param bet
-	 * @param maxPlays
+	 * @param maxjogadas
 	 */
 	public BettingFillingGame(Filling[] symbols, int numberOfUsedSymbols, int seed, 
-			int bottleSize, int score, int bet, int maxPlays) {
+			int bottleSize, int score, int bet, int maxjogadas) {
 		
 		super(symbols, numberOfUsedSymbols, seed, bottleSize);
         this.score = score;
         this.bet = bet;
-        this.maxPlays = maxPlays;
+        this.maxjogadas = maxjogadas;
+        this.playsLeft = maxjogadas;
 		
 	
 	}
@@ -35,10 +37,11 @@ public class BettingFillingGame extends AbstractFillingGame{
 	 */
 	@Override
 	public void provideHelp() {
-        if (jogadas < maxPlays) {
+        if (jogadas < maxjogadas) {
             Bottle newBottle = new Cup(); // Assuming Cup is a subclass of Bottle
             table.addBootle(newBottle);
-            jogadas++;
+            this.playsLeft--;
+            this.jogadas++;
         }
     }
 
@@ -50,7 +53,7 @@ public class BettingFillingGame extends AbstractFillingGame{
 	 */
 	@Override
 	public int score() {
-        return score;
+        return this.score;
     }
 
 	/**
@@ -58,7 +61,9 @@ public class BettingFillingGame extends AbstractFillingGame{
 	 */
 	@Override
 	public boolean isRoundFinished() {
-        return areAllFilled() || jogadas >= maxPlays;
+		this.playsLeft--;
+        return areAllFilled() || this.jogadas >= maxjogadas;
+        
     }
 
 
@@ -67,7 +72,7 @@ public class BettingFillingGame extends AbstractFillingGame{
 	 * @return
 	 */
 	public int numberOfPlaysLeft() {
-		return maxPlays - jogadas;
+		return this.playsLeft;
 	}
 
 
@@ -77,7 +82,7 @@ public class BettingFillingGame extends AbstractFillingGame{
 	 */
 	@Override
 	public Bottle getNewBootle() {
-        return new Cup(); // Assuming Cup is a subclass of Bottle
+        return new Cup();
     }
 
 	/**
@@ -87,19 +92,31 @@ public class BettingFillingGame extends AbstractFillingGame{
 	@Override
 	public void updateScore() {
         if (isRoundFinished()) {
-            int numberOfPlays = jogadas();
-            if (numberOfPlays < maxPlays) {
-                score += (maxPlays-numberOfPlays) * bet;
+            int numberOfjogadas = this.jogadas();
+            if (numberOfjogadas <= this.maxjogadas) {
+                this.score += 2 * this.bet;
             } else {
-                score = 0;
+                this.score -= 2* this.bet;
             }
         }
     }
 
+	@Override
 	public String toString() {
-        // Provide a textual description of the game
-        return "Score: " + score + Table.EOL + this.table.toString() + 
-				"Status: " + jogadas + " moves have been used until now. You still have " + (maxPlays - jogadas )+ " moves left."
-				+ Table.EOL;
-    }
-}
+		StringBuilder res = new StringBuilder();
+		
+		res.append(super.toString());
+		if (this.finished) {
+			int firstLineIndex = res.indexOf(System.lineSeparator());
+			res.replace(0, firstLineIndex, "Score: " + this.score);
+			res.append("Status: This round is finished." + AbstractFillingGame.EOL);
+			res.append(this.jogadas + " moves were used." + AbstractFillingGame.EOL);
+		} else {
+			res.append("Status: " + this.jogadas + " moves have been used until now. You still have " 
+					+ numberOfPlaysLeft() + " moves left." + AbstractFillingGame.EOL);
+		}
+		
+		return res.toString();
+	        
+	}
+	        }

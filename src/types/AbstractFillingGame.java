@@ -3,11 +3,24 @@ package types;
 public abstract class AbstractFillingGame implements FillingGame {
 
 	public static String EOL = System.lineSeparator();
+	
 	protected Table table;
-	protected int numberOfRounds;
-	//protected Bottle[] bottles;
-	public static final String empty = "⬜";
+	
 	protected int jogadas;
+	
+	protected int score;
+	
+	protected boolean jogada = false;
+	
+	protected boolean finished = false;
+	
+	protected int numberOfRounds;
+	
+	protected int bottleSize;
+
+	protected Bottle[] bottles;
+
+	public static final String empty = "⬜";
 
 	
 
@@ -31,12 +44,9 @@ public abstract class AbstractFillingGame implements FillingGame {
 	 * @return
 	 */
 	public int jogadas() {
-		return jogadas;
+		return this.jogadas;
 	}
 	
-	//public int getNumberOfRounds() {
-      //  return numberOfRounds;
-    //}
 
 	/**
 	 * 
@@ -44,7 +54,7 @@ public abstract class AbstractFillingGame implements FillingGame {
 	 */
 	
 	public int getBottlesSize() {
-		return table.getSizeBottles();
+		return this.table.getSizeBottles();
 	}
 
 	/**
@@ -52,22 +62,34 @@ public abstract class AbstractFillingGame implements FillingGame {
 	 * @param x
 	 * @param y
 	 */
-	 @Override
-	 public void play(int x, int y) {
-	        if (x >= 0 && x < table.getSizeBottles() && y >= 0 && y < table.getSizeBottles()) {
-	            table.pourFromTo(x, y);
-	            jogadas++;
-	        }
-			updateScore();
-	 }
+	@Override
+	public void play(int x, int y) {
+	    if (this.table.isEmpty(y)) {
+	        this.table.pourFromTo(x, y);
+	    }
+
+	    while (!this.table.isEmpty(x) && !this.table.isFull(y) && this.top(x).equals(this.top(y))) {
+	        this.table.pourFromTo(x, y);
+	    }
+	    this.jogadas++;
+	    this.jogada = true;
+	    
+
+	    if (!this.jogada) {
+	        System.out.println("Different type of fillings cannot be merged.");
+	        this.jogadas--;
+	    }
+
+	    this.isRoundFinished();
+	}
 
 	/**
 	 * 
 	 */
 	@Override
 	public void provideHelp() {
-        Bottle newBottle = getNewBootle();
-        table.addBootle(newBottle);
+		Bottle newBottle = new Bottle(this.bottleSize);
+		table.addBootle(newBottle);
     }
 
 	/**
@@ -89,12 +111,12 @@ public abstract class AbstractFillingGame implements FillingGame {
 	 */
 	@Override
 	public Filling top(int x) {
-		return table.top(x);
+		return this.table.top(x);
 	}
 
 	@Override
 	public boolean singleFilling(int x) {
-	    return table.singleFilling(x);
+	    return this.table.singleFilling(x);
 	}
 
 	/**
@@ -116,9 +138,11 @@ public abstract class AbstractFillingGame implements FillingGame {
 	 * 
 	 */
 	 @Override
-	    public void startNewRound() {
-	        table.regenerateTable();
+	 public void startNewRound() {
+	      this.table.regenerateTable();
 	        numberOfRounds++;
+	        this.finished = false;
+	        this.jogadas = 0;
 	    }
 
 	/**
@@ -127,7 +151,7 @@ public abstract class AbstractFillingGame implements FillingGame {
 	 */
 	 @Override
 	  public boolean areAllFilled() {
-	      return table.areAllFilled();
+	      return this.table.areAllFilled();
 	   }
 
 	
@@ -135,29 +159,13 @@ public abstract class AbstractFillingGame implements FillingGame {
 	 * 
 	 * @return
 	 */
-	public String toString() {
-        StringBuilder result = new StringBuilder();
+	 public String toString() {
+			StringBuilder res = new StringBuilder();
 
-        int maxBottleSize = 0;
-        for (Bottle bottle : this.table.getBottles()) {
-            maxBottleSize = Math.max(maxBottleSize, bottle.size());
-        }
-
-        for (int row = maxBottleSize - 1; row >= 0; row--) {
-            for (Bottle bottle : this.table.getBottles()) {
-                Filling[] contents = bottle.getContent();
-                if (row < contents.length && contents[row] != null) {
-                    result.append(contents[row].toString());
-                } else {
-                    result.append((bottle instanceof Cup && row >= bottle.size()) ? Cup.empty : empty);
-                }
-                result.append("    ");
-            }
-            result.append(EOL);
-        }
-
-        return result.toString();
-    }
+			res.append(this.table.toString());
+			
+			return res.toString();
+		}
 	
 
 }

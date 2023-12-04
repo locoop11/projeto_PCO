@@ -14,8 +14,6 @@ public class FinalScoringFillingGame extends AbstractFillingGame {
      */
     public FinalScoringFillingGame(Filling[] symbols, int numberOfUsedSymbols, int seed, int bottleSize) {
         super(symbols, numberOfUsedSymbols, seed, bottleSize);
-        this.score = 0;
-        startNewRound();
     }
 
     /**
@@ -30,44 +28,49 @@ public class FinalScoringFillingGame extends AbstractFillingGame {
     public FinalScoringFillingGame(Filling[] symbols, int numberOfUsedSymbols, int seed, int bottleSize, int score) {
         super(symbols, numberOfUsedSymbols, seed, bottleSize);
         this.score = score;
-        startNewRound();
     }
 
+  
     @Override
     public void provideHelp() {
-        // Implementation specific to FinalScoringFillingGame
-        // You can add custom logic here if needed
-    }
+		super.provideHelp();
+		if (this.score - 100 > 0) {
+			this.score -= 100;
+		} else {
+			this.score = 0;
+		}
+	}
 
+    
     @Override
-    public void updateScore() {
-        if (isRoundFinished()) {
-            int numberOfPlays = jogadas();
-            if (numberOfPlays <= 10) {
-                score += 1000;
-            } else if (numberOfPlays <= 15) {
-                score += 500;
-            } else if (numberOfPlays <= 25) {
-                score += 200;
-            } else {
-                score -= 100;
-            }
-        }
-    }
-
+	public void updateScore() {
+		if (this.jogadas < 10) {
+			this.score = 1000;
+		} else if (this.jogadas >= 10 && this.jogadas < 15) {
+			this.score = 500;
+		} else if (this.jogadas >= 15 && this.jogadas < 25) {
+			this.score = 200;
+		}
+	}
+    
     @Override
     public boolean isRoundFinished() {
-        return areAllFilled();
-    }
+		if (areAllFilled()) {
+			this.finished = true;
+			this.updateScore();
+			return finished;
+			} else {
+			return finished;
+		}
+	}
 
     @Override
     public int score() {
-        return score;
+        return this.score;
     }
 
     @Override
     public Bottle getNewBootle() {
-        // Assuming DEFAULT_SIZE is a constant
         Bottle newBottle = new Bottle();
         table.addBootle(newBottle);
         return newBottle;
@@ -75,15 +78,21 @@ public class FinalScoringFillingGame extends AbstractFillingGame {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
-
-       result.append(table.toString());
-
-        result.append("Status: ").append(isRoundFinished() ? "The round is finished." : "The round is not finished.").append(EOL);
-        result.append(jogadas()).append(" moves have been used until now.").append(EOL);
-
-        return "Score: " + score + EOL + result.toString();
-    }
+		StringBuilder result = new StringBuilder();
+		result.append("Score: " + this.score + AbstractFillingGame.EOL);
+		
+		result.append(super.toString());
+		if (this.finished) {
+			int firstLineIndex = result.indexOf(System.lineSeparator());
+			result.replace(0, firstLineIndex, "Score: " + this.score);
+			result.append("Status: This round is finished." + AbstractFillingGame.EOL);
+			result.append(this.jogadas + " moves were used." + AbstractFillingGame.EOL);
+		} else {
+			result.append("Status: The round is not finished." + AbstractFillingGame.EOL);
+			result.append(this.jogadas + " moves have been used until now." + AbstractFillingGame.EOL);
+		}
+		return result.toString();
+	}
 
 
 
