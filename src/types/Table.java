@@ -1,3 +1,13 @@
+/**
+ * 
+ * Grupo 11
+ * 
+ * Hugo Silva - nº60253
+ * Mariana Foz - nº58955
+ * Natacha Neves - nº58649
+ * 
+ */
+
 package types;
 
 import java.util.Arrays;

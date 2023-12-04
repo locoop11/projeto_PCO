@@ -3,7 +3,17 @@ package types;
 import java.util.Iterator;
 import java.util.Arrays;
 
-//Notem que podem faltar métodos na classe que permitam lidar melhor com os objectos.
+/**
+ * Class that implements a bottle.
+ * 
+ * Grupo 11
+ * 
+ * Hugo Silva - nº60253
+ * Mariana Foz - nº58955
+ * Natacha Neves - nº58649
+ * 
+ */
+
 public class Bottle implements Iterable<Filling> {
 
 	public static int DEFAULT_SIZE = 5;

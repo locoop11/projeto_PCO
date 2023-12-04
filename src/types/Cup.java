@@ -1,6 +1,13 @@
 package types;
-
-//Notem que podem faltar métodos na classe que permitam lidar melhor com os objectos.
+/**
+ * 
+ * Grupo 11
+ * 
+ * Hugo Silva - nº60253
+ * Mariana Foz - nº58955
+ * Natacha Neves - nº58649
+ * 
+ */
 public class Cup extends Bottle {
 
 	public static final int CUP_SIZE = 1;

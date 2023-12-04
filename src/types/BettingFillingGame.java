@@ -1,6 +1,15 @@
 package types;
+/**
+ * A BettingFillingGame is a game where the player has a limited number of plays
+ * 
+ * Grupo 11
+ * 
+ * Hugo Silva - nº60253
+ * Mariana Foz - nº58955
+ * Natacha Neves - nº58649
+ * 
+ */
 
-//Notem que podem faltar métodos na classe que permitam lidar melhor com os objectos.
 public class BettingFillingGame extends AbstractFillingGame {
 	private int bet;
 	private int maxjogadas;
