@@ -30,39 +30,39 @@ public class FinalScoringFillingGame extends AbstractFillingGame {
         this.score = score;
     }
 
-  
     @Override
     public void provideHelp() {
-		super.provideHelp();
-		if (this.score - 100 > 0) {
-			this.score -= 100;
-		} else {
-			this.score = 0;
-		}
-	}
+        super.provideHelp();
+        if (this.score - 100 > 0) {
+            this.score -= 100;
+        } else {
+            this.score = 0;
+        }
+    }
 
-    
     @Override
-	public void updateScore() {
-		if (this.jogadas < 10) {
-			this.score = 1000;
-		} else if (this.jogadas >= 10 && this.jogadas < 15) {
-			this.score = 500;
-		} else if (this.jogadas >= 15 && this.jogadas < 25) {
-			this.score = 200;
-		}
-	}
-    
+    public void updateScore() {
+        if (this.jogadas <= 10) {
+            this.score = 1000;
+        } else if (this.jogadas > 10 && this.jogadas <= 15) {
+            this.score = 500;
+        } else if (this.jogadas >= 15 && this.jogadas < 25) {
+            this.score = 200;
+        } else {
+            this.score = 0;
+        }
+    }
+
     @Override
     public boolean isRoundFinished() {
-		if (areAllFilled()) {
-			this.finished = true;
-			this.updateScore();
-			return finished;
-			} else {
-			return finished;
-		}
-	}
+        if (areAllFilled()) {
+            this.finished = true;
+            this.updateScore();
+            return finished;
+        } else {
+            return finished;
+        }
+    }
 
     @Override
     public int score() {
@@ -78,22 +78,20 @@ public class FinalScoringFillingGame extends AbstractFillingGame {
 
     @Override
     public String toString() {
-		StringBuilder result = new StringBuilder();
-		result.append("Score: " + this.score + AbstractFillingGame.EOL);
-		
-		result.append(super.toString());
-		if (this.finished) {
-			int firstLineIndex = result.indexOf(System.lineSeparator());
-			result.replace(0, firstLineIndex, "Score: " + this.score);
-			result.append("Status: This round is finished." + AbstractFillingGame.EOL);
-			result.append(this.jogadas + " moves were used." + AbstractFillingGame.EOL);
-		} else {
-			result.append("Status: The round is not finished." + AbstractFillingGame.EOL);
-			result.append(this.jogadas + " moves have been used until now." + AbstractFillingGame.EOL);
-		}
-		return result.toString();
-	}
+        StringBuilder result = new StringBuilder();
+        result.append("Score: " + this.score + AbstractFillingGame.EOL);
 
-
+        result.append(super.toString());
+        if (this.finished) {
+            int firstLineIndex = result.indexOf(System.lineSeparator());
+            result.replace(0, firstLineIndex, "Score: " + this.score);
+            result.append("Status: This round is finished." + AbstractFillingGame.EOL);
+            result.append(this.jogadas + " moves were used." + AbstractFillingGame.EOL);
+        } else {
+            result.append("Status: The round is not finished." + AbstractFillingGame.EOL);
+            result.append(this.jogadas + " moves have been used until now." + AbstractFillingGame.EOL);
+        }
+        return result.toString();
+    }
 
 }
